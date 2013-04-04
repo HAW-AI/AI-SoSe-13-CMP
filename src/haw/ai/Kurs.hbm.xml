@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2013 1:03:50 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping package="haw.ai">
+	<class name="Kurs" table="KURS">
+		<id name="kursId" type="long" column="KURS_ID">
+			<generator class="native" />
+		</id>
+		<property name="titel" type="java.lang.String" access="field">
+			<column name="TITEL" />
+		</property>
+		<many-to-one name="student" class="Student" fetch="select">
+			<column name="student_id" not-null="true" />
+		</many-to-one>
+
+		<set name="buecher" table="BUCH_KURS" 
+        	inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="KURS_ID" not-null="true" />
+            </key>
+            <many-to-many class="Buch">
+                <column name="BUCH_ID" not-null="true" />
+            </many-to-many>
+        </set>
+	</class>
+</hibernate-mapping>
