@@ -1,5 +1,6 @@
 package haw.ai;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
@@ -22,4 +23,8 @@ public class HibernateUtil {
 	public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
+	
+	public static Session getSession() {
+		return getSessionFactory().openSession();
+	}
 }

@@ -1,18 +1,29 @@
 package haw.ai;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Session;
 
 public class Kurs {
 	private long kursId;
 	private String titel;
 	private Student student;
 	private Set<Buch> buecher;
-	
-	public Kurs() {}
-	
+
+	public Kurs() {
+	}
+
 	public Kurs(String titel) {
 		this.titel = titel;
+	}
+
+	public static Kurs find(long kursId) {
+		Session session = HibernateUtil.getSession();
+		Kurs kurs = (Kurs) session.get(Kurs.class, kursId);
+		session.close();
+		return kurs;
 	}
 
 	@Override
@@ -79,5 +90,28 @@ public class Kurs {
 
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+	
+	public void addStudent(Student student) {
+		if (this.student == null) {
+			student.addKurs(this);
+		}
+	}
+
+	public void addBuch(Buch buch) {
+		if (this.buecher == null) {
+			this.buecher = new HashSet<Buch>();
+		}
+		if (this.buecher.add(buch)) {
+			buch.addKurs(this);
+		}
+	}
+
+	public void removeBuch(Buch buch) {
+		if (this.buecher != null) {
+			if (this.buecher.remove(buch)) {
+				buch.removeKurs(this);
+			}
+		}
 	}
 }

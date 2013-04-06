@@ -1,13 +1,7 @@
 package haw.ai;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 public class Main {
 
@@ -24,19 +18,14 @@ public class Main {
         Notenkonto notenkonto = new Notenkonto(1.0);
         Student student = new Student("Mike Hunt");
         
-        student.setNotenkonto(notenkonto);
-        notenkonto.setStudent(student);
+        student.addNotenkonto(notenkonto);
         session.save(student);
         
         Kurs kurs1 = new Kurs("AI");
-        kurs1.setStudent(student);
         Kurs kurs2 = new Kurs("RN");
-        kurs2.setStudent(student);
         
-        Set<Kurs> kurse = new HashSet<Kurs>();
-        kurse.add(kurs1);
-        kurse.add(kurs2);
-        student.setKurse(kurse);
+        student.addKurs(kurs1);
+        student.addKurs(kurs2);
         
         session.save(kurs2);
         session.save(kurs1);
@@ -44,8 +33,19 @@ public class Main {
         
         Buch buch1 = new Buch("per anhalter durch die galaxis");
         Buch buch2 = new Buch("Game of Thrones: A Song of Ice and Fire");
+        Buch buch3 = new Buch("The Alchemist");
         
+        kurs1.addBuch(buch1);
+        kurs1.addBuch(buch2);
         
+        kurs2.addBuch(buch2);
+        kurs2.addBuch(buch3);
+
+        session.save(buch1);
+        session.save(buch2);
+        session.save(buch3);
+        session.save(kurs1);
+        session.save(kurs2);
         
         session.getTransaction().commit();
 

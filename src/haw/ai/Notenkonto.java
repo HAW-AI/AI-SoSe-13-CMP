@@ -9,10 +9,18 @@ public class Notenkonto {
 	private Student student;
 
 	public Notenkonto() {
-		
+
 	}
+
 	public Notenkonto(double gesamtnote) {
 		this.gesamtnote = gesamtnote;
+	}
+	
+	public static Notenkonto find(long studentId) {
+		Session session = HibernateUtil.getSession();
+		Notenkonto notenkonto = (Notenkonto) session.get(Notenkonto.class, studentId);
+		session.close();
+		return notenkonto;
 	}
 
 	@Override
@@ -25,6 +33,7 @@ public class Notenkonto {
 		result = prime * result + (int) (studentId ^ (studentId >>> 32));
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -41,6 +50,7 @@ public class Notenkonto {
 			return false;
 		return true;
 	}
+
 	public double getGesamtnote() {
 		return gesamtnote;
 	}
@@ -63,5 +73,12 @@ public class Notenkonto {
 
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+
+	public void addStudent(Student student) {
+		if (this.student == null) {
+			this.student = student;
+			student.setNotenkonto(this);
+		}
 	}
 }
