@@ -23,6 +23,22 @@ public class Buch {
 	    return buch;
 	}
 	
+	public static void update(Buch buch) {
+		Session session = HibernateUtil.getSession();
+		session.beginTransaction();
+		session.merge(buch);
+		session.getTransaction().commit();
+		session.close();
+	}
+	
+	public static void delete(Buch buch) {
+		Session session = HibernateUtil.getSession();
+		session.beginTransaction();
+		session.delete(buch);
+		session.getTransaction().commit();
+		session.close();
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

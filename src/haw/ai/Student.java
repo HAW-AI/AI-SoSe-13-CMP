@@ -1,11 +1,9 @@
 package haw.ai;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 public class Student {
 	private long studentId;
@@ -25,6 +23,22 @@ public class Student {
 		Student student = (Student) session.get(Student.class, studentId);
 		session.close();
 		return student;
+	}
+	
+	public static void update(Student student) {
+		Session session = HibernateUtil.getSession();
+		session.beginTransaction();
+		session.merge(student);
+		session.getTransaction().commit();
+		session.close();
+	}
+	
+	public static void delete(Student student) {
+		Session session = HibernateUtil.getSession();
+		session.beginTransaction();
+		session.delete(student);
+		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -108,6 +122,14 @@ public class Student {
 			}
 			if (this.kurse.add(kurs)) {
 				kurs.setStudent(this);
+			}
+		}
+	}
+	
+	public void removeKurs(Kurs kurs) {
+		if (this.kurse != null) {
+			if (this.kurse.remove(kurs)) {
+				kurs.removeStudent(this);
 			}
 		}
 	}

@@ -20,6 +20,7 @@ public class Main {
         
         student.addNotenkonto(notenkonto);
         session.save(student);
+        session.save(notenkonto);
         
         Kurs kurs1 = new Kurs("AI");
         Kurs kurs2 = new Kurs("RN");
@@ -48,7 +49,28 @@ public class Main {
         session.save(kurs2);
         
         session.getTransaction().commit();
+        
+        Student mike = Student.find((long)1);
+        System.out.println(mike.getName());
+        
+        Notenkonto mikesKonto = Notenkonto.find(mike.getStudentId());
+        System.out.println(mikesKonto.getGesamtnote());
+        System.out.println(mike.getKurse().toString());
+        System.out.println(mike.getNotenkonto().toString());
+        
+        System.out.println(mike.getKurse(). toString());
+        for (Kurs kurs : mike.getKurse()) {
+			System.out.println(kurs.getTitel());
+		}
 
+        System.out.println(mike.getKurse(). toString());
+        for (Kurs kurs : mike.getKurse()) {
+			System.out.println(kurs.getTitel());
+			System.out.println("Buecher des Kurses:");
+			for (Buch buch : kurs.getBuecher()) {
+				System.out.println("  " + "- " + buch.getTitel());
+			}
+		}
         session.close();
 	}
 

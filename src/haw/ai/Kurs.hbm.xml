@@ -15,7 +15,7 @@
 		</many-to-one>
 
 		<set name="buecher" table="BUCH_KURS" 
-        	inverse="false" lazy="true" fetch="select">
+        	inverse="false" lazy="false" fetch="select">
             <key>
                 <column name="KURS_ID" not-null="true" />
             </key>

@@ -1,7 +1,6 @@
 package haw.ai;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 public class Notenkonto {
 	private double gesamtnote;
@@ -21,6 +20,22 @@ public class Notenkonto {
 		Notenkonto notenkonto = (Notenkonto) session.get(Notenkonto.class, studentId);
 		session.close();
 		return notenkonto;
+	}
+	
+	public static void update(Notenkonto notenkonto) {
+		Session session = HibernateUtil.getSession();
+		session.beginTransaction();
+		session.merge(notenkonto);
+		session.getTransaction().commit();
+		session.close();
+	}
+	
+	public static void delete(Notenkonto notenkonto) {
+		Session session = HibernateUtil.getSession();
+		session.beginTransaction();
+		session.delete(notenkonto);
+		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override

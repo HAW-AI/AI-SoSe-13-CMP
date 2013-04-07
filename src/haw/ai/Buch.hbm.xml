@@ -12,7 +12,7 @@
 		</property>
 
 		<set name="kurse" table="BUCH_KURS" 
-        	inverse="true" lazy="true" fetch="select">
+        	inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="BUCH_ID" not-null="true" />
             </key>

@@ -8,6 +8,7 @@ import org.hibernate.tool.hbm2ddl.SchemaExport;
 public class HibernateUtil {
 	private static final SessionFactory sessionFactory = buildSessionFactory();
 
+	@SuppressWarnings("deprecation")
 	private static SessionFactory buildSessionFactory() {
 		try {
 			Configuration conf = new Configuration().configure();

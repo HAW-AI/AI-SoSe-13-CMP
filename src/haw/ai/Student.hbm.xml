@@ -10,9 +10,10 @@
         <property name="name" type="java.lang.String" access="field">
             <column name="NAME" />
         </property>
-        <one-to-one name="notenkonto" class="Notenkonto" cascade="save-update"></one-to-one>
+        <one-to-one name="notenkonto" class="Notenkonto"></one-to-one>
+        <!-- <one-to-one name="notenkonto" class="Notenkonto" cascade="save-update"></one-to-one> -->
         <set name="kurse" table="kurs"
-                inverse="true" lazy="true" fetch="select">
+                inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="student_id" not-null="true" />
             </key>
